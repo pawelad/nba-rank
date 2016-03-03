@@ -1,4 +1,5 @@
 Django>=1.9.3
 django-extensions>=1.6.1
+django-kronos>=0.9
 
 git+https://github.com/seemethere/nba_py.git
