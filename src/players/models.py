@@ -69,6 +69,18 @@ class Player(TimeStampedModel, models.Model):
         """Return `Rating` instance with data from database"""
         return Rating(mu=self.rating_mu, sigma=self.rating_sigma)
 
+    def get_full_name(self):
+        if self.last_name:
+            return '{0.first_name} {0.last_name}'.format(self)
+        else:
+            return self.first_name
+
+    def get_team_name(self):
+        if self.team:
+            return '{0.city} {0.name}'.format(self.team)
+        else:
+            return _("No team")
+
     def __str__(self):
         return '{0.first_name} {0.last_name} ({0.PERSON_ID})'.format(self)
 
@@ -107,4 +119,4 @@ class Team(TimeStampedModel, models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return '{0.city} {0.name} ({0.abbreviation})'.format(self)
+        return '{0.city} {0.name} ({0.abbr})'.format(self)

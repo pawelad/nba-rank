@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="col-md-10 col-md-offset-1">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>{{ _("ranking")|capfirst }}</th>
+                    <th>{{ _("name")|capfirst }}</th>
+                    <th>{{ _("team")|capfirst }}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for player in object_list %}
+                    <tr>
+                        <td>{{ player.pk }}</td>
+                        <td>{{ player.get_full_name }}</td>
+                        <td>{{ player.get_team_name }}</td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

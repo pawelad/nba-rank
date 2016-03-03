@@ -1,12 +1,13 @@
 from django.conf.urls import url, include
 from django.conf.urls.static import static
-from django.views.generic import TemplateView
 from django.conf import settings
 from django.contrib import admin
 
+from players.views import PlayerListView
+
+
 urlpatterns = [
-    url(r'^$',
-        TemplateView.as_view(template_name='nba_rank/index.html'), name='index'),
+    url(r'^$', PlayerListView.as_view(), name='index'),
 
     # Django Admin
     url(r'^django_admin/', include(admin.site.urls)),
