@@ -1,0 +1,49 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}NBA Rank{% endblock title %}</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'nba_rank/css/bootstrap-theme.min.css' %}">
+
+    <!-- Own -->
+    <link href="{% static 'nba_rank/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+{% block body %}
+    {% block nav %}
+        {% include 'partials/nav.html' %}
+    {% endblock nav %}
+
+    {% block container %}
+        <div class="container">
+            {% include 'partials/messages.html' %}
+
+            {% block content %}{% endblock content %}
+        </div>
+    {% endblock container %}
+    
+    {% block footer %}
+        {% include 'partials/footer.html' %}
+    {% endblock %}
+
+    {% block base_js %}
+        {# Base #}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {% endblock base_js %}
+
+    {% block extra_js %}{% endblock extra_js %}
+
+{% endblock body %}
+</body>
+
+</html>
