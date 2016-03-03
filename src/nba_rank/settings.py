@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # nba_rank
+    'players',
 
     # other
 ]
