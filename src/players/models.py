@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from django_extensions.db.models import TimeStampedModel
+from trueskill import Rating
 
 
 class Player(TimeStampedModel, models.Model):
@@ -26,14 +27,14 @@ class Player(TimeStampedModel, models.Model):
         max_length=16,
     )
 
-    ranking_mu = models.FloatField(
-        verbose_name=_("Ranking MU"),
+    rating_mu = models.FloatField(
+        verbose_name=_("Rating MU"),
         null=True,
         default=None,
     )
 
-    ranking_sigma = models.FloatField(
-        verbose_name=_("Ranking SIGMA"),
+    rating_sigma = models.FloatField(
+        verbose_name=_("Rating SIGMA"),
         null=True,
         default=None,
     )
@@ -62,7 +63,11 @@ class Player(TimeStampedModel, models.Model):
     class Meta:
         verbose_name = _("player")
         verbose_name_plural = _("players")
-        ordering = ['-ranking_mu', 'ranking_sigma']
+        ordering = ['-rating_mu', 'rating_sigma']
+
+    def get_rating(self):
+        """Return `Rating` instance with data from database"""
+        return Rating(mu=self.rating_mu, sigma=self.rating_sigma)
 
     def __str__(self):
         return '{0.first_name} {0.last_name} ({0.PERSON_ID})'.format(self)

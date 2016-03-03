@@ -3,3 +3,4 @@ django-extensions>=1.6.1
 django-kronos>=0.9
 
 git+https://github.com/seemethere/nba_py.git
+trueskill>=0.4.4
