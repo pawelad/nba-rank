@@ -2,6 +2,9 @@ Django>=1.9.3
 django-extensions>=1.6.1
 django-kronos>=0.9
 
+requests>=2.9.1
+Pillow>=3.1.1
+
 git+https://github.com/seemethere/nba_py.git
 trueskill>=0.4.4
 ranking>=0.3.1

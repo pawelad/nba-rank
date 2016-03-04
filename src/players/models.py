@@ -23,6 +23,12 @@ class Player(TimeStampedModel, models.Model):
         max_length=64,
     )
 
+    photo = models.ImageField(
+        verbose_name=_("photo"),
+        upload_to='players_photos',
+        null=True,
+    )
+
     season = models.CharField(
         verbose_name=_("season"),
         max_length=16,
