@@ -12,12 +12,11 @@
             </thead>
 
             <tbody>
-                {% for player in object_list %}
+                {% for rank, player in players_ranking %}
                     <tr>
-                        <td>{{ player.pk }}</td>
+                        <td>{{ rank }}</td>
                         <td>{{ player.get_full_name }}</td>
                         <td>{{ player.get_team_name }}</td>
-
                     </tr>
                 {% endfor %}
             </tbody>

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 
 from django_extensions.db.models import TimeStampedModel
@@ -63,23 +64,27 @@ class Player(TimeStampedModel, models.Model):
     class Meta:
         verbose_name = _("player")
         verbose_name_plural = _("players")
-        ordering = ['-rating_mu', 'rating_sigma']
+        ordering = ['-rating_mu', 'rating_sigma', 'last_name']
 
-    def get_rating(self):
-        """Return `Rating` instance with data from database"""
-        return Rating(mu=self.rating_mu, sigma=self.rating_sigma)
-
+    @cached_property
     def get_full_name(self):
+        """Return player name."""
         if self.last_name:
             return '{0.first_name} {0.last_name}'.format(self)
         else:
             return self.first_name
 
+    @cached_property
     def get_team_name(self):
+        """Return player team name."""
         if self.team:
             return '{0.city} {0.name}'.format(self.team)
         else:
             return _("No team")
+
+    def get_rating(self):
+        """Return `Rating` instance with data from database"""
+        return Rating(mu=self.rating_mu, sigma=self.rating_sigma)
 
     def __str__(self):
         return '{0.first_name} {0.last_name} ({0.PERSON_ID})'.format(self)
