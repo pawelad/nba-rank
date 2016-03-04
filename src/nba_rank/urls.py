@@ -3,11 +3,12 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 
-from players.views import PlayerListView
+from players.views import PlayerListView, PlayerVoteView
 
 
 urlpatterns = [
     url(r'^$', PlayerListView.as_view(), name='index'),
+    url(r'^vote/$', PlayerVoteView.as_view(), name='vote'),
 
     # Django Admin
     url(r'^django_admin/', include(admin.site.urls)),

@@ -20,3 +20,20 @@ footer {
 footer p {
     margin-top: 20px;
 }
+
+
+/* Magnificent Popup */
+.white-popup {
+    position: relative;
+    background: #FFF;
+    padding: 20px;
+    width: auto;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+
+/* Misc */
+#tie {
+    margin-top: 100px;
+}

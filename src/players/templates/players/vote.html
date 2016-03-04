@@ -1,0 +1,32 @@
+<div class="white-popup">
+    <div class="text-center">
+        <h2>{{ _("Who is better?") }}</h2>
+    </div>
+    <hr>
+    <div class="row">
+        {# Player A #}
+        <div class="col-md-5">
+            <img src="{{ player_a.photo.url }}" alt="{{ player_a.get_full_name }}" class="img-thumbnail center-block">
+
+            <a class="btn btn-primary btn-lg btn-block" href="#" role="button">
+                {{ player_a.get_full_name }} ({{ player_a.team.abbr }})
+            </a>
+        </div>
+
+        {# Tie #}
+        <div class="col-md-2" id="tie">
+            <a class="btn btn-warning btn-lg btn-block" href="#" role="button">
+                {{ _("tie") }}
+            </a>
+        </div>
+
+        {# Player B #}
+        <div class="col-md-5">
+            <img src="{{ player_b.photo.url }}" alt="{{ player_a.get_full_name }}" class="img-thumbnail center-block">
+
+            <a class="btn btn-primary btn-lg btn-block" href="#" role="button">
+                {{ player_b.get_full_name }} ({{ player_b.team.abbr }})
+            </a>
+        </div>
+    </div>
+</div>
