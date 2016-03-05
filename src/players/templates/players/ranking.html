@@ -35,7 +35,7 @@
                         <td>{{ player_season.ast }}</td>
                         <td>{{ player_season.stl }}</td>
                         <td>{{ player_season.blk }}</td>
-                        <td>{{ player_season.rating_mu|floatformat:"3"|default:"-" }}</td>
+                        <td><strong>{{ player_season.rating_mu|floatformat:"3"|default:"-" }}</strong></td>
                     </tr>
                 {% endfor %}
             </tbody>

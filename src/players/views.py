@@ -5,28 +5,33 @@ from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 
-from nba_py.constants import CURRENT_SEASON
 from trueskill import rate_1vs1
 from ranking import Ranking
 
-from players.models import Player, PlayerSeason
+from players.models import PlayerSeason
 from misc.utils import get_two_random
 
 
 class PlayerListView(ListView):
-    template_name = 'players/list.html'
+    template_name = 'players/ranking.html'
     context_object_name = 'players_ranking'
     model = PlayerSeason
     paginate_by = 50
 
     def get_queryset(self):
-        season = CURRENT_SEASON
+        season = self.kwargs['season']
         qs = super().get_queryset().filter(season=season)
+        if not qs.exists():
+            raise Http404
 
         # Create players ranking
         ranking = Ranking(qs, start=1, key=lambda x: x.rating_mu or 0)
 
         return list(ranking)  # Not really a queryset, but helps with pagination
+
+    def get_context_data(self, **kwargs):
+        kwargs['season'] = self.kwargs['season']
+        return super().get_context_data(**kwargs)
 
 
 class PlayerVoteModalView(TemplateView):
@@ -34,7 +39,7 @@ class PlayerVoteModalView(TemplateView):
 
     def get_context_data(self, **kwargs):
         # Get two random players from given season
-        season = CURRENT_SEASON
+        season = self.kwargs['season']
         qs = PlayerSeason.objects.filter(season=season)
         player_season_a, player_season_b = get_two_random(qs)
         kwargs['player_season_a'] = player_season_a
@@ -71,6 +76,9 @@ class PlayerVoteSaveView(View):
         player_b = get_object_or_404(PlayerSeason, pk=data[1])
         rating_b = player_b.get_rating()
 
+        if player_a.season != player_b.season:
+            raise Http404
+
         if len(data) == 2:
             # First one is the winner
             rating_a, rating_b = rate_1vs1(rating_a, rating_b)
@@ -88,4 +96,4 @@ class PlayerVoteSaveView(View):
         player_b.save()
 
         messages.success(request, _("Thanks for voting!"))
-        return redirect('index')
+        return redirect('ranking', player_a.season)

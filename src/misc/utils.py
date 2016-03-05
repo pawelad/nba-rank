@@ -6,9 +6,7 @@ def get_two_random(qs):
     Get two random instances of passed queryset
     :type qs: Django's `Queryset`
     """
-    last = qs.count() - 1
-
-    index1, index2 = random.sample(range(0, last), 2)
+    index1, index2 = random.sample(range(0, qs.count()), 2)
 
     all_objects = qs.all()
     object1 = all_objects[index1]

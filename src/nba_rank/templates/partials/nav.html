@@ -13,13 +13,35 @@
                 NBA Rank
             </a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse center-block">
             {# Left side #}
             <ul class="nav navbar-nav">
-                <li>
-                    <a href="{% url 'vote_modal' %}" class="ajax-popup-link">{{ _("vote")|capfirst }}</a>
-                </li>
+                {% if available_seasons|length > 1 %}
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">
+                            {{ season }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            {% for season in available_seasons %}
+                                <li>
+                                    <a href="{% url 'ranking' season %}">{{ season }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="active">
+                        <a href="{% url 'ranking' season %}">{{ season }}</a>
+                    </li>
+                {% endif %}
             </ul>
+
+            {# Vote button #}
+            <div class="navbar-form navbar-right">
+                <a href="{% url 'vote_modal' season %}" class="btn btn-success ajax-popup-link" role="button">
+                    {{ _("vote")|capfirst }}
+                </a>
+            </div>
         </div>
     </div>
 </nav>
