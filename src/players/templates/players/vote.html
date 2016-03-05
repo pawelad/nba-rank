@@ -1,3 +1,5 @@
+{% load utils_tags %}
+
 <div class="white-popup">
     <div class="text-center">
         <h2>{{ _("Who is better?") }}</h2>
@@ -5,9 +7,35 @@
     <hr>
     <div class="row">
         {# Player A #}
-        <div class="col-md-5">
+        <div class="col-sm-5">
+            {# Photo #}
             <img src="{{ player_season_a.player.photo.url }}" alt="{{ player_season_a.player.get_full_name }}" class="img-thumbnail center-block">
 
+            {# Stats #}
+            <div class="row center-block stats">
+                <div class="col-xs-4">
+                    <p>
+                        <strong>FG%</strong> {{ player_season_a.fg_pct|percentage|default:"-" }}<br>
+                        <strong>3P%</strong> {{ player_season_a.fg3_pct|percentage|default:"-" }}<br>
+                        <strong>FT%</strong> {{ player_season_a.ft_pct|percentage|default:"-" }}
+                    </p>
+                </div>
+                <div class="col-xs-4">
+                    <p>
+                        <strong>PTS</strong> {{ player_season_a.pts }}<br>
+                        <strong>REB</strong> {{ player_season_a.reb }}<br>
+                        <strong>AST</strong> {{ player_season_a.ast }}
+                    </p>
+                </div>
+                <div class="col-xs-4">
+                    <p>
+                        <strong>STL</strong> {{ player_season_a.stl }}<br>
+                        <strong>BLK</strong> {{ player_season_a.blk }}
+                    </p>
+                </div>
+            </div>
+
+            {# Vote button #}
             <a class="btn btn-primary btn-lg btn-block" role="button"
                href="{% url 'vote_save' player_season_a_key %}">
                 {{ player_season_a.player.get_full_name }} ({{ player_season_a.team.abbr }})
@@ -15,7 +43,7 @@
         </div>
 
         {# Tie #}
-        <div class="col-md-2" id="tie">
+        <div class="col-sm-2" id="tie">
             <a class="btn btn-warning btn-lg btn-block" role="button"
                href="{% url 'vote_save' tie_key %}">
                 {{ _("tie") }}
@@ -23,9 +51,35 @@
         </div>
 
         {# Player B #}
-        <div class="col-md-5">
+        <div class="col-sm-5">
+            {# Photo #}
             <img src="{{ player_season_b.player.photo.url }}" alt="{{ player_season_b.player.get_full_name }}" class="img-thumbnail center-block">
 
+            {# Stats #}
+            <div class="row center-block stats">
+                <div class="col-xs-4">
+                    <p>
+                        <strong>FG%</strong> {{ player_season_b.fg_pct|percentage|default:"-" }}<br>
+                        <strong>3P%</strong> {{ player_season_b.fg3_pct|percentage|default:"-" }}<br>
+                        <strong>FT%</strong> {{ player_season_b.ft_pct|percentage|default:"-" }}
+                    </p>
+                </div>
+                <div class="col-xs-4">
+                    <p>
+                        <strong>PTS</strong> {{ player_season_b.pts }}<br>
+                        <strong>REB</strong> {{ player_season_b.reb }}<br>
+                        <strong>AST</strong> {{ player_season_b.ast }}
+                    </p>
+                </div>
+                <div class="col-xs-4">
+                    <p>
+                        <strong>STL</strong> {{ player_season_b.stl }}<br>
+                        <strong>BLK</strong> {{ player_season_b.blk }}
+                    </p>
+                </div>
+            </div>
+
+            {# Vote button #}
             <a class="btn btn-primary btn-lg btn-block" role="button"
                href="{% url 'vote_save' player_season_b_key %}">
                 {{ player_season_b.player.get_full_name }} ({{ player_season_b.team.abbr }})
