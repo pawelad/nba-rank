@@ -8,6 +8,7 @@
                     <th>{{ _("ranking")|capfirst }}</th>
                     <th>{{ _("name")|capfirst }}</th>
                     <th>{{ _("team")|capfirst }}</th>
+                    <th>{{ _("rating")|capfirst }}</th>
                 </tr>
             </thead>
 
@@ -17,6 +18,7 @@
                         <td>{{ rank }}</td>
                         <td>{{ player.get_full_name }}</td>
                         <td>{{ player.get_team_name }}</td>
+                        <td>{{ player.rating_mu|floatformat|default:"-" }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
