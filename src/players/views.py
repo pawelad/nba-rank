@@ -14,16 +14,17 @@ from misc.utils import get_two_random
 
 class PlayerListView(ListView):
     template_name = 'players/list.html'
+    context_object_name = 'players_ranking'
     model = Player
+    paginate_by = 50
 
-    def get_context_data(self, **kwargs):
+    def get_queryset(self):
         qs = super().get_queryset()
 
         # Create players ranking
         ranking = Ranking(qs, start=1, key=lambda x: x.rating_mu or 0)
-        kwargs['players_ranking'] = ranking
 
-        return super().get_context_data(**kwargs)
+        return list(ranking)  # Not really a queryset, but helps with pagination
 
 
 class PlayerVoteModalView(TemplateView):
@@ -35,7 +36,7 @@ class PlayerVoteModalView(TemplateView):
         kwargs['player_a'] = player_a
         kwargs['player_b'] = player_b
 
-        # Create signed keys
+        # Create signed keys (only work for 30 seconds)
         # First player passed is the winner; has more then 2 elements if tied
         kwargs['player_a_key'] = signing.dumps((player_a.pk, player_b.pk))
         kwargs['player_b_key'] = signing.dumps((player_b.pk, player_a.pk))

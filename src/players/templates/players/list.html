@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="col-md-10 col-md-offset-1">
-        <table class="table table-bordered table-striped">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>
                     <th>{{ _("ranking")|capfirst }}</th>
@@ -18,10 +18,34 @@
                         <td>{{ rank }}</td>
                         <td>{{ player.get_full_name }}</td>
                         <td>{{ player.get_team_name }}</td>
-                        <td>{{ player.rating_mu|floatformat|default:"-" }}</td>
+                        <td>{{ player.rating_mu|floatformat:"3"|default:"-" }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <div class="text-center">
+            <ul class="pagination">
+                <li class="pull-left">
+                    <a href="?page=1"><<</a>
+                </li>
+
+                {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
+                {% endif %}
+
+                {% for i in paginator.page_range %}
+                    <li {% if page_obj.number == i %} class="active" {% endif %}><a href="?page={{i}}">{{i}}</a></li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}">></a></li>
+                {% endif %}
+
+                <li class="pull-right">
+                    <a href="?page={{ page_obj.paginator.num_pages }}">>></a>
+                </li>
+            </ul>
+        </div>
     </div>
 {% endblock content %}
