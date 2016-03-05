@@ -46,11 +46,8 @@
             {% if is_paginated %}
                 <div class="text-center">
                     <ul class="pagination">
-                        <li class="pull-left">
-                            <a href="?page=1"><<</a>
-                        </li>
-
                         {% if page_obj.has_previous %}
+                            <li><a href="?page=1"><<</a></li>
                             <li><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
                         {% endif %}
 
@@ -60,11 +57,8 @@
 
                         {% if page_obj.has_next %}
                             <li><a href="?page={{ page_obj.next_page_number }}">></a></li>
+                            <li><a href="?page={{ page_obj.paginator.num_pages }}">>></a></li>
                         {% endif %}
-
-                        <li class="pull-right">
-                            <a href="?page={{ page_obj.paginator.num_pages }}">>></a>
-                        </li>
                     </ul>
                 </div>
             {% endif %}
