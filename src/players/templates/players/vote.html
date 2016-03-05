@@ -6,11 +6,11 @@
     <div class="row">
         {# Player A #}
         <div class="col-md-5">
-            <img src="{{ player_a.photo.url }}" alt="{{ player_a.get_full_name }}" class="img-thumbnail center-block">
+            <img src="{{ player_season_a.player.photo.url }}" alt="{{ player_season_a.player.get_full_name }}" class="img-thumbnail center-block">
 
             <a class="btn btn-primary btn-lg btn-block" role="button"
-               href="{% url 'vote_save' player_a_key %}">
-                {{ player_a.get_full_name }} ({{ player_a.team.abbr }})
+               href="{% url 'vote_save' player_season_a_key %}">
+                {{ player_season_a.player.get_full_name }} ({{ player_season_a.team.abbr }})
             </a>
         </div>
 
@@ -24,11 +24,11 @@
 
         {# Player B #}
         <div class="col-md-5">
-            <img src="{{ player_b.photo.url }}" alt="{{ player_a.get_full_name }}" class="img-thumbnail center-block">
+            <img src="{{ player_season_b.player.photo.url }}" alt="{{ player_season_b.player.get_full_name }}" class="img-thumbnail center-block">
 
             <a class="btn btn-primary btn-lg btn-block" role="button"
-               href="{% url 'vote_save' player_b_key %}">
-                {{ player_b.get_full_name }} ({{ player_b.team.abbr }})
+               href="{% url 'vote_save' player_season_b_key %}">
+                {{ player_season_b.player.get_full_name }} ({{ player_season_b.team.abbr }})
             </a>
         </div>
     </div>

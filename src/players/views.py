@@ -5,21 +5,23 @@ from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 
+from nba_py.constants import CURRENT_SEASON
 from trueskill import rate_1vs1
 from ranking import Ranking
 
-from players.models import Player
+from players.models import Player, PlayerSeason
 from misc.utils import get_two_random
 
 
 class PlayerListView(ListView):
     template_name = 'players/list.html'
     context_object_name = 'players_ranking'
-    model = Player
+    model = PlayerSeason
     paginate_by = 50
 
     def get_queryset(self):
-        qs = super().get_queryset()
+        season = CURRENT_SEASON
+        qs = super().get_queryset().filter(season=season)
 
         # Create players ranking
         ranking = Ranking(qs, start=1, key=lambda x: x.rating_mu or 0)
@@ -31,16 +33,24 @@ class PlayerVoteModalView(TemplateView):
     template_name = 'players/vote.html'
 
     def get_context_data(self, **kwargs):
-        # Get two random players
-        player_a, player_b = get_two_random(Player)
-        kwargs['player_a'] = player_a
-        kwargs['player_b'] = player_b
+        # Get two random players from given season
+        season = CURRENT_SEASON
+        qs = PlayerSeason.objects.filter(season=season)
+        player_season_a, player_season_b = get_two_random(qs)
+        kwargs['player_season_a'] = player_season_a
+        kwargs['player_season_b'] = player_season_b
 
         # Create signed keys (only work for 30 seconds)
         # First player passed is the winner; has more then 2 elements if tied
-        kwargs['player_a_key'] = signing.dumps((player_a.pk, player_b.pk))
-        kwargs['player_b_key'] = signing.dumps((player_b.pk, player_a.pk))
-        kwargs['tie_key'] = signing.dumps((player_a.pk, player_b.pk, True))
+        kwargs['player_season_a_key'] = signing.dumps(
+            (player_season_a.pk, player_season_b.pk)
+        )
+        kwargs['player_season_b_key'] = signing.dumps(
+            (player_season_b.pk, player_season_a.pk)
+        )
+        kwargs['tie_key'] = signing.dumps(
+            (player_season_a.pk, player_season_b.pk, True)
+        )
 
         return super().get_context_data(**kwargs)
 
@@ -56,9 +66,9 @@ class PlayerVoteSaveView(View):
         except signing.BadSignature:
             raise Http404
 
-        player_a = get_object_or_404(Player, pk=data[0])
+        player_a = get_object_or_404(PlayerSeason, pk=data[0])
         rating_a = player_a.get_rating()
-        player_b = get_object_or_404(Player, pk=data[1])
+        player_b = get_object_or_404(PlayerSeason, pk=data[1])
         rating_b = player_b.get_rating()
 
         if len(data) == 2:

@@ -8,17 +8,27 @@
                     <th>{{ _("ranking")|capfirst }}</th>
                     <th>{{ _("name")|capfirst }}</th>
                     <th>{{ _("team")|capfirst }}</th>
+                    <th>PTS</th>
+                    <th>REB</th>
+                    <th>AST</th>
+                    <th>STL</th>
+                    <th>BLK</th>
                     <th>{{ _("rating")|capfirst }}</th>
                 </tr>
             </thead>
 
             <tbody>
-                {% for rank, player in players_ranking %}
+                {% for rank, player_season in players_ranking %}
                     <tr>
                         <td>{{ rank }}</td>
-                        <td>{{ player.get_full_name }}</td>
-                        <td>{{ player.get_team_name }}</td>
-                        <td>{{ player.rating_mu|floatformat:"3"|default:"-" }}</td>
+                        <td>{{ player_season.player.get_full_name }}</td>
+                        <td>{{ player_season.get_team_name }}</td>
+                        <td>{{ player_season.pts }}</td>
+                        <td>{{ player_season.reb }}</td>
+                        <td>{{ player_season.ast }}</td>
+                        <td>{{ player_season.stl }}</td>
+                        <td>{{ player_season.blk }}</td>
+                        <td>{{ player_season.rating_mu|floatformat:"3"|default:"-" }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

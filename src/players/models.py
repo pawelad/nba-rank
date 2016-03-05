@@ -3,16 +3,11 @@ from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 
 from django_extensions.db.models import TimeStampedModel
+from nba_py.constants import CURRENT_SEASON
 from trueskill import Rating
 
 
 class Player(TimeStampedModel, models.Model):
-    team = models.ForeignKey(
-        'players.Team', related_name='players',
-        verbose_name=_("team"),
-        null=True,
-    )
-
     first_name = models.CharField(
         verbose_name=_("first name"),
         max_length=64,
@@ -29,23 +24,6 @@ class Player(TimeStampedModel, models.Model):
         null=True,
     )
 
-    season = models.CharField(
-        verbose_name=_("season"),
-        max_length=16,
-    )
-
-    rating_mu = models.FloatField(
-        verbose_name=_("Rating MU"),
-        null=True,
-        default=None,
-    )
-
-    rating_sigma = models.FloatField(
-        verbose_name=_("Rating SIGMA"),
-        null=True,
-        default=None,
-    )
-
     # NBA API
     PERSON_ID = models.PositiveIntegerField(
         verbose_name="PERSON_ID",
@@ -58,6 +36,65 @@ class Player(TimeStampedModel, models.Model):
         unique=True,
     )
 
+    class Meta:
+        verbose_name = _("player")
+        verbose_name_plural = _("players")
+        ordering = ['last_name', 'first_name']
+
+    @cached_property
+    def get_full_name(self):
+        """Return player name."""
+        return ' '.join([self.first_name, self.last_name])
+
+    def get_current_season(self):
+        """Return player's current season"""
+        return PlayerSeason.objects.get(player=self, season=CURRENT_SEASON)
+
+    def __str__(self):
+        return '{0.get_full_name} ({0.PERSON_ID})'.format(self)
+
+
+class PlayerSeason(TimeStampedModel, models.Model):
+    player = models.ForeignKey(
+        'players.Player', related_name='seasons',
+        verbose_name=_("player"),
+    )
+
+    team = models.ForeignKey(
+        'players.Team', related_name='players_seasons',
+        verbose_name=_("team"),
+        null=True,
+    )
+
+    season = models.CharField(
+        verbose_name=_("season"),
+        max_length=16,
+    )
+
+    # trueskill
+    rating_mu = models.FloatField(
+        verbose_name=_("Rating MU"),
+        null=True,
+        default=None,
+    )
+
+    rating_sigma = models.FloatField(
+        verbose_name=_("Rating SIGMA"),
+        null=True,
+        default=None,
+    )
+
+    # Stats
+    pts = models.FloatField(verbose_name="PTS")
+    reb = models.FloatField(verbose_name="REB")
+    ast = models.FloatField(verbose_name="AST")
+    stl = models.FloatField(verbose_name="STL")
+    blk = models.FloatField(verbose_name="BLK")
+    fg_pct = models.FloatField(verbose_name="FG%")
+    fg3_pct = models.FloatField(verbose_name="3P%")
+    ft_pct = models.FloatField(verbose_name="FT%")
+
+    # NBA API
     ROSTERSTATUS = models.PositiveSmallIntegerField(
         verbose_name="ROSTERSTATUS",
     )
@@ -68,32 +105,24 @@ class Player(TimeStampedModel, models.Model):
     )
 
     class Meta:
-        verbose_name = _("player")
-        verbose_name_plural = _("players")
-        ordering = ['-rating_mu', 'rating_sigma', 'last_name']
+        verbose_name = _("player season")
+        verbose_name_plural = _("player seasons")
+        ordering = ['-season', '-rating_mu', 'rating_sigma']
+        unique_together = ('player', 'season')
 
-    @cached_property
-    def get_full_name(self):
-        """Return player name."""
-        if self.last_name:
-            return '{0.first_name} {0.last_name}'.format(self)
-        else:
-            return self.first_name
-
-    @cached_property
     def get_team_name(self):
-        """Return player team name."""
+        """Return player's season team name."""
         if self.team:
             return '{0.city} {0.name}'.format(self.team)
         else:
             return _("No team")
 
     def get_rating(self):
-        """Return `Rating` instance with data from database"""
+        """Return current `Rating` instance with data from database."""
         return Rating(mu=self.rating_mu, sigma=self.rating_sigma)
 
     def __str__(self):
-        return '{0.first_name} {0.last_name} ({0.PERSON_ID})'.format(self)
+        return '{0.player} ({0.season})'.format(self)
 
 
 class Team(TimeStampedModel, models.Model):
