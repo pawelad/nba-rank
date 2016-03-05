@@ -36,6 +36,7 @@ INSTALLED_APPS = [
 
     # nba_rank
     'players',
+    'misc',
 
     # other
     'kronos',
