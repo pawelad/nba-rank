@@ -9,3 +9,10 @@ def percentage(value):
         return '{0:.1%}'.format(value)
     else:
         return None
+
+
+@register.assignment_tag
+def get_version():
+    """Returns app version"""
+    from nba_rank import __version__
+    return __version__

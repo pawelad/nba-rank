@@ -1,9 +1,14 @@
 {% load static %}
+{% load utils_tags %}
 
 <footer>
     <div class="container">
         <p class="pull-left">
-            Developed and maintained by Paweł Adamczak
+            Developed and maintained by <a href="https://github.com/pawelad">@pawelad</a>
+        </p>
+
+        <p class="text-muted pull-right">
+            v{% get_version %}
         </p>
     </div>
 </footer>
