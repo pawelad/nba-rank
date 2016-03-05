@@ -2,7 +2,7 @@
 
 <div class="white-popup">
     <div class="text-center">
-        <h2>{{ _("Who is better?") }}</h2>
+        <h3>{{ _("Who is better?") }}</h3>
     </div>
     <hr>
     <div class="row">
@@ -46,7 +46,7 @@
         <div class="col-sm-2" id="tie">
             <a class="btn btn-warning btn-lg btn-block" role="button"
                href="{% url 'vote_save' tie_key %}">
-                {{ _("tie") }}
+                {{ _("tie")|capfirst }}
             </a>
         </div>
 

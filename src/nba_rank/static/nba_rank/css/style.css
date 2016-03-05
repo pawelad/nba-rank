@@ -48,3 +48,8 @@ footer p {
 .stats strong {
     margin-right: 5px;
 }
+
+/* Misc */
+.alert-dismissible .close {
+    top: -4px;
+}
