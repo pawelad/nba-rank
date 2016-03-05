@@ -2,70 +2,72 @@
 {% load utils_tags %}
 
 {% block content %}
-    <div class="col-md-12">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>{{ _("ranking")|capfirst }}</th>
-                    <th>{{ _("name")|capfirst }}</th>
-                    <th>{{ _("team")|capfirst }}</th>
-                    <th>FG%</th>
-                    <th>3P%</th>
-                    <th>FT%</th>
-                    <th>PTS</th>
-                    <th>REB</th>
-                    <th>AST</th>
-                    <th>STL</th>
-                    <th>BLK</th>
-                    <th>{{ _("rating")|capfirst }}</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for rank, player_season in players_ranking %}
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover">
+                <thead>
                     <tr>
-                        <td>{{ rank }}</td>
-                        <td>{{ player_season.player.get_full_name }}</td>
-                        <td>{{ player_season.get_team_name }}</td>
-                        <td>{{ player_season.fg_pct|percentage|default:"-" }}</td>
-                        <td>{{ player_season.fg3_pct|percentage|default:"-" }}</td>
-                        <td>{{ player_season.ft_pct|percentage|default:"-" }}</td>
-                        <td>{{ player_season.pts }}</td>
-                        <td>{{ player_season.reb }}</td>
-                        <td>{{ player_season.ast }}</td>
-                        <td>{{ player_season.stl }}</td>
-                        <td>{{ player_season.blk }}</td>
-                        <td><strong>{{ player_season.rating_mu|floatformat:"3"|default:"-" }}</strong></td>
+                        <th>{{ _("ranking")|capfirst }}</th>
+                        <th>{{ _("name")|capfirst }}</th>
+                        <th>{{ _("team")|capfirst }}</th>
+                        <th>FG%</th>
+                        <th>3P%</th>
+                        <th>FT%</th>
+                        <th>PTS</th>
+                        <th>REB</th>
+                        <th>AST</th>
+                        <th>STL</th>
+                        <th>BLK</th>
+                        <th>{{ _("rating")|capfirst }}</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
 
-        {# Pagination #}
-        {% if is_paginated %}
-            <div class="text-center">
-                <ul class="pagination">
-                    <li class="pull-left">
-                        <a href="?page=1"><<</a>
-                    </li>
-
-                    {% if page_obj.has_previous %}
-                        <li><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
-                    {% endif %}
-
-                    {% for i in paginator.page_range %}
-                        <li {% if page_obj.number == i %} class="active" {% endif %}><a href="?page={{i}}">{{i}}</a></li>
+                <tbody>
+                    {% for rank, player_season in players_ranking %}
+                        <tr>
+                            <td>{{ rank }}</td>
+                            <td>{{ player_season.player.get_full_name }}</td>
+                            <td>{{ player_season.get_team_name }}</td>
+                            <td>{{ player_season.fg_pct|percentage|default:"-" }}</td>
+                            <td>{{ player_season.fg3_pct|percentage|default:"-" }}</td>
+                            <td>{{ player_season.ft_pct|percentage|default:"-" }}</td>
+                            <td>{{ player_season.pts }}</td>
+                            <td>{{ player_season.reb }}</td>
+                            <td>{{ player_season.ast }}</td>
+                            <td>{{ player_season.stl }}</td>
+                            <td>{{ player_season.blk }}</td>
+                            <td><strong>{{ player_season.rating_mu|floatformat:"3"|default:"-" }}</strong></td>
+                        </tr>
                     {% endfor %}
+                </tbody>
+            </table>
 
-                    {% if page_obj.has_next %}
-                        <li><a href="?page={{ page_obj.next_page_number }}">></a></li>
-                    {% endif %}
+            {# Pagination #}
+            {% if is_paginated %}
+                <div class="text-center">
+                    <ul class="pagination">
+                        <li class="pull-left">
+                            <a href="?page=1"><<</a>
+                        </li>
 
-                    <li class="pull-right">
-                        <a href="?page={{ page_obj.paginator.num_pages }}">>></a>
-                    </li>
-                </ul>
-            </div>
-        {% endif %}
+                        {% if page_obj.has_previous %}
+                            <li><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
+                        {% endif %}
+
+                        {% for i in paginator.page_range %}
+                            <li {% if page_obj.number == i %} class="active" {% endif %}><a href="?page={{i}}">{{i}}</a></li>
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}">></a></li>
+                        {% endif %}
+
+                        <li class="pull-right">
+                            <a href="?page={{ page_obj.paginator.num_pages }}">>></a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
     </div>
 {% endblock content %}
