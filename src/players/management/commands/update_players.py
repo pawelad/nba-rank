@@ -25,21 +25,23 @@ class Command(BaseCommand):
         all_players = PlayerList().info()
 
         for api_player in all_players:
-            self.stdout.write(
-                self.style.SUCCESS(
-                    "Processing {}".format(api_player['DISPLAY_FIRST_LAST'])
-                )
-            )
+            info_msg = "'{} ({})'".format(api_player['DISPLAY_FIRST_LAST'],
+                                          api_player['PERSON_ID'])
 
             # Get the player, or create him if doesn't exist
             qs = Player.objects.filter(PERSON_ID=api_player['PERSON_ID'])
             if qs.exists():
                 if options['skip']:
+                    self.stdout.write(
+                        self.style.SUCCESS("Skipping " + info_msg)
+                    )
                     continue
 
                 player = qs[0]
+                self.stdout.write(self.style.SUCCESS("Processing " + info_msg))
             else:
                 player = Player()
+                self.stdout.write(self.style.SUCCESS("Adding " + info_msg))
 
             try:
                 name = api_player['DISPLAY_LAST_COMMA_FIRST']
@@ -73,17 +75,18 @@ class Command(BaseCommand):
             player.save()
 
             # Player current season
-            player_stats = PlayerGeneralSplits(
-                api_player['PERSON_ID']
-            ).overall()[0]
+            try:
+                player_stats = PlayerGeneralSplits(
+                    api_player['PERSON_ID']
+                ).overall()[0]
+            except IndexError:
+                self.stdout.write(self.style.ERROR("No stats for " + info_msg))
+                continue
 
             qs = PlayerSeason.objects.filter(
                 player=player, season=player_stats['GROUP_VALUE']
             )
             if qs.exists():
-                if options['skip']:
-                    continue
-
                 player_season = qs[0]
             else:
                 player_season = PlayerSeason()
