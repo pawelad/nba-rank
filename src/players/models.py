@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from django_extensions.db.models import TimeStampedModel
 from nba_py.constants import CURRENT_SEASON
-from trueskill import Rating
+from trueskill import Rating, MU, SIGMA
 
 
 class Player(TimeStampedModel, models.Model):
@@ -74,14 +74,12 @@ class PlayerSeason(TimeStampedModel, models.Model):
     # trueskill
     rating_mu = models.FloatField(
         verbose_name=_("Rating MU"),
-        null=True,
-        default=None,
+        default=MU,
     )
 
     rating_sigma = models.FloatField(
         verbose_name=_("Rating SIGMA"),
-        null=True,
-        default=None,
+        default=SIGMA,
     )
 
     # Stats
