@@ -9,7 +9,7 @@ def get_two_random(qs):
     random.seed()
     index1, index2 = random.sample(range(0, qs.count()), 2)
 
-    all_objects = qs.all()
+    all_objects = list(qs.all())
     object1 = all_objects[index1]
     object2 = all_objects[index2]
 
