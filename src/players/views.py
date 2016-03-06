@@ -1,6 +1,7 @@
 from django.core import signing
 from django.views.generic import ListView, TemplateView, View
 from django.http import Http404
+from django.views.decorators.cache import never_cache
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.utils.translation import ugettext as _
@@ -12,6 +13,7 @@ from players.models import PlayerSeason
 from misc.utils import get_two_random
 
 
+@never_cache
 class PlayerListView(ListView):
     template_name = 'players/ranking.html'
     context_object_name = 'players_ranking'
@@ -34,6 +36,7 @@ class PlayerListView(ListView):
         return super().get_context_data(**kwargs)
 
 
+@never_cache
 class PlayerVoteModalView(TemplateView):
     template_name = 'players/vote.html'
 
@@ -60,6 +63,7 @@ class PlayerVoteModalView(TemplateView):
         return super().get_context_data(**kwargs)
 
 
+@never_cache
 class PlayerVoteSaveView(View):
     def get(self, request, *args, **kwargs):
         try:
