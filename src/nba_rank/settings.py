@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # other
     'kronos',
+    'analytical',
 ]
 
 
@@ -90,6 +91,12 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+#############################
+# Third-party apps settings #
+#############################
+
+# django-analytical
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-74705494-2'
 
 ################
 # Own settings #
