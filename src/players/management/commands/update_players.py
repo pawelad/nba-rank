@@ -25,6 +25,12 @@ class Command(BaseCommand):
         all_players = PlayerList().info()
 
         for api_player in all_players:
+            self.stdout.write(
+                self.style.SUCCESS(
+                    "Processing {}".format(api_player['DISPLAY_FIRST_LAST'])
+                )
+            )
+
             # Get the player, or create him if doesn't exist
             qs = Player.objects.filter(PERSON_ID=api_player['PERSON_ID'])
             if qs.exists():
