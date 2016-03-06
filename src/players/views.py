@@ -13,12 +13,15 @@ from players.models import PlayerSeason
 from misc.utils import get_two_random
 
 
-@never_cache
 class PlayerListView(ListView):
     template_name = 'players/ranking.html'
     context_object_name = 'players_ranking'
     model = PlayerSeason
     paginate_by = 50
+
+    @never_cache
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         season = self.kwargs['season']
@@ -36,9 +39,12 @@ class PlayerListView(ListView):
         return super().get_context_data(**kwargs)
 
 
-@never_cache
 class PlayerVoteModalView(TemplateView):
     template_name = 'players/vote.html'
+
+    @never_cache
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         # Get two random players from given season
@@ -63,8 +69,11 @@ class PlayerVoteModalView(TemplateView):
         return super().get_context_data(**kwargs)
 
 
-@never_cache
 class PlayerVoteSaveView(View):
+    @never_cache
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
         try:
             data = signing.loads(self.kwargs['signed_data'], max_age=30)
