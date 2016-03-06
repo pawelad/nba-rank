@@ -71,6 +71,15 @@ class PlayerSeason(TimeStampedModel, models.Model):
         max_length=16,
     )
 
+    # Only for counting overall number of votes while
+    # not creating another model just for it
+    # Winner gets 2 votes, both get 1 vote if its a draw
+    votes = models.PositiveIntegerField(
+        verbose_name=_("votes"),
+        default=0,
+        editable=False,
+    )
+
     # trueskill
     rating_mu = models.FloatField(
         verbose_name=_("Rating MU"),
