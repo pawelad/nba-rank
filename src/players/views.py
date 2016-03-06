@@ -82,12 +82,12 @@ class PlayerVoteSaveView(View):
         if len(data) == 2:
             # First one is the winner
             rating_a, rating_b = rate_1vs1(rating_a, rating_b)
-            player_a.votes += 2
+            player_a.votes_win += 1
         else:
             # Tie
             rating_a, rating_b = rate_1vs1(rating_a, rating_b, drawn=True)
-            player_a.votes += 1
-            player_b.votes += 1
+            player_a.votes_tie += 1
+            player_b.votes_tie += 1
 
         # Save new ratings
         player_a.rating_mu = rating_a.mu

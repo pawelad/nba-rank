@@ -71,11 +71,16 @@ class PlayerSeason(TimeStampedModel, models.Model):
         max_length=16,
     )
 
-    # Only for counting overall number of votes while
+    # Mostly counting overall number of votes while
     # not creating another model just for it
-    # Winner gets 2 votes, both get 1 vote if its a draw
-    votes = models.PositiveIntegerField(
-        verbose_name=_("votes"),
+    votes_win = models.PositiveIntegerField(
+        verbose_name=_("votes win"),
+        default=0,
+        editable=False,
+    )
+
+    votes_tie = models.PositiveIntegerField(
+        verbose_name=_("votes tie"),
         default=0,
         editable=False,
     )
