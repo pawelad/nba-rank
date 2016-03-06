@@ -52,3 +52,7 @@ footer {
 .alert-dismissible .close {
     top: -5px;
 }
+
+.navbar-text {
+    color: #ffffff !important;
+}
