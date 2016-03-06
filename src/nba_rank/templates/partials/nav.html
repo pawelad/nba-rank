@@ -36,9 +36,13 @@
                 {% endif %}
             </ul>
 
-            {# Vote button #}
-            <div class="navbar-form navbar-right">
-                <a href="{% url 'vote_modal' season %}" class="btn btn-success ajax-popup-link" role="button">
+            {# Right side #}
+            <div class="pull-right">
+                <p class="navbar-text">
+                    Crowdsourced NBA players ranking
+                </p>
+
+                <a href="{% url 'vote_modal' season %}" class="btn btn-success navbar-btn ajax-popup-link" role="button">
                     {{ _("vote")|capfirst }}
                 </a>
             </div>
