@@ -1,4 +1,3 @@
-{% load static %}
 {% load utils_tags %}
 
 <footer>
@@ -7,6 +6,10 @@
             <a href="https://github.com/pawelad/nba-rank" title="{{ _("source")|capfirst }}" target="_blank">
                 <i class="fa fa-github-square fa-2x"></i>
             </a>
+        </p>
+
+        <p class="pull-left">
+            {{ _("Total number of votes:") }} {% total_votes %}
         </p>
 
         <p class="text-muted pull-right">
