@@ -4,7 +4,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <table class="ranking table table-condensed table-striped table-hover">
+            <table class="table table-condensed table-hover" id="ranking">
                 <thead>
                     <tr>
                         <th>{{ _("ranking")|capfirst }}</th>
@@ -72,6 +72,17 @@
 {% block extra_js %}
     <script>
         $(document).ready(function() {
+            <!-- Make table striped based on ranking -->
+            $('#ranking > tbody  > tr:not(:first)').each(function() {
+                var currRanking = $(this).find("td:first").text();
+                var prev = $(this).prev();
+                var prevRanking = prev.find("td:first").text();
+                
+                if (prev.hasClass('odd') && currRanking == prevRanking || !prev.hasClass('odd') && currRanking != prevRanking) {
+                    $(this).addClass('odd');
+                }
+            });
+            
             <!-- tooltipster -->
             $('#rating-tooltip').tooltipster({
                 theme: 'tooltipster-shadow',

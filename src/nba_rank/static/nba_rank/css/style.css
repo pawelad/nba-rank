@@ -20,6 +20,18 @@ footer {
 }
 
 
+/* Ranking table */
+#ranking tr th:last-child,
+#ranking tr td:last-child {
+    text-align: center;
+    font-weight: bold;
+}
+
+#ranking tr.odd td {
+    background-color: #f9f9f9;
+}
+
+
 /* Magnificent Popup */
 .white-popup {
     position: relative;
@@ -56,10 +68,4 @@ footer {
 
 .navbar-text {
     color: #ffffff !important;
-}
-
-.ranking tr th:last-child,
-.ranking tr td:last-child {
-    text-align: center;
-    font-weight: bold;
 }
