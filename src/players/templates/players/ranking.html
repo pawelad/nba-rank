@@ -4,7 +4,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-bordered table-hover table-condensed">
+            <table class="ranking table table-condensed table-striped table-hover">
                 <thead>
                     <tr>
                         <th>{{ _("ranking")|capfirst }}</th>
@@ -18,7 +18,10 @@
                         <th>AST</th>
                         <th>STL</th>
                         <th>BLK</th>
-                        <th>{{ _("rating")|capfirst }}</th>
+                        <th id="rating-tooltip">
+                            {{ _("rating")|capfirst }}
+                            <i class="fa fa-question-circle"></i>
+                        </th>
                     </tr>
                 </thead>
 
@@ -36,7 +39,7 @@
                             <td>{{ player_season.ast }}</td>
                             <td>{{ player_season.stl }}</td>
                             <td>{{ player_season.blk }}</td>
-                            <td><strong>{{ player_season.rating_mu|floatformat:"3"|default:"-" }}</strong></td>
+                            <td>{{ player_season.rating_mu|floatformat:"3"|default:"-" }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -65,3 +68,18 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block extra_js %}
+    <script>
+        $(document).ready(function() {
+            <!-- tooltipster -->
+            $('#rating-tooltip').tooltipster({
+                theme: 'tooltipster-shadow',
+                position: 'right',
+                interactive: true,
+                maxWidth: 125,
+                content: $('<span>{{ _("Calculated via <a href=\"http://research.microsoft.com/en-us/projects/trueskill/\" target=\"_blank\">TrueSkill</a> ranking system")  }}</span>')
+            });
+        });
+    </script>
+{% endblock %}

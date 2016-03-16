@@ -30,7 +30,7 @@ class PlayerListView(ListView):
             raise Http404
 
         # Create players ranking
-        ranking = Ranking(qs, start=1, key=lambda x: x.rating_mu or 0)
+        ranking = Ranking(qs, start=1, key=lambda x: x.rating_mu)
 
         return list(ranking)  # Not really a queryset, but helps with pagination
 

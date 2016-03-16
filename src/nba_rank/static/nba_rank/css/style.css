@@ -57,3 +57,9 @@ footer {
 .navbar-text {
     color: #ffffff !important;
 }
+
+.ranking tr th:last-child,
+.ranking tr td:last-child {
+    text-align: center;
+    font-weight: bold;
+}
