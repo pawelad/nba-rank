@@ -27,7 +27,7 @@ footer {
     font-weight: bold;
 }
 
-#ranking tr.odd td {
+#ranking tr.odd:not(:hover) td {
     background-color: #f9f9f9;
 }
 
