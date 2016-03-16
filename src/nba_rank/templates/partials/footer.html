@@ -1,19 +1,34 @@
+{% load i18n %}
 {% load utils_tags %}
 
 <footer>
     <div class="container">
-        <p class="pull-left">
-            <a href="https://github.com/pawelad/nba-rank" title="{{ _("source")|capfirst }}" target="_blank">
-                <i class="fa fa-github-square fa-2x"></i>
-            </a>
-        </p>
-
-        <p class="pull-left">
-            {{ _("Total number of votes:") }} {% total_votes %}
-        </p>
-
-        <p class="text-muted pull-right">
-            v{% get_version %}
-        </p>
+        <div class="row">
+            <div class="col-xs-2">
+                <a href="https://github.com/pawelad/nba-rank" title="{{ _("source")|capfirst }}" target="_blank">
+                    <i class="fa fa-github-square fa-2x"></i>
+                </a>
+            </div>
+            
+            <div class="col-xs-8">
+                <p class="text-center">
+                    {% total_votes as total_votes %}
+                    {% blocktrans trimmed %}
+                        Created by <a href="https://pawelad.xyz" target="_blank">Paweł Adamczak</a>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        Stats are updated daily via <a href="http://stats.nba.com/" target="_blank">NBA Stats</a>
+                        & <a href="https://github.com/seemethere/nba_py" target="_blank">nba_py</a>
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        Total number of votes: {{ total_votes }}
+                    {% endblocktrans %}
+                </p>
+            </div>
+            
+            <div class="col-xs-2">
+                <p class="text-muted pull-right">
+                    v{% get_version %}
+                </p>
+            </div>
+        </div>
     </div>
 </footer>

@@ -4,7 +4,7 @@ ranking system, with data provided **only** by user votes in random head-to-head
 
 So feel free to head to [nba-rank.pawelad.xyz](https://nba-rank.pawelad.xyz/) and rank 'em all!
 
-Players info and stats are updated daily and taken directly from [NBA Stats](http://stats.nba.com/).
+Stats are updated daily via [NBA Stats](http://stats.nba.com/) & [nba_py](https://github.com/seemethere/nba_py).
 
 ## Contributions
 Feel free to use, ask, fork, star, report bugs, fix them,

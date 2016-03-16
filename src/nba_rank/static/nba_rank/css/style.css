@@ -19,11 +19,6 @@ footer {
     line-height: 2em;
 }
 
-footer p:not(:first-child):not(:last-child) {
-    padding-right: 10px;
-    padding-left: 10px;
-}
-
 
 /* Magnificent Popup */
 .white-popup {
