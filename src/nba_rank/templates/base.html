@@ -13,17 +13,16 @@
     <link rel="icon" type="image/png" href="{% static 'nba_rank/img/favicon-32x32.png' %}" sizes="32x32">
     <link rel="apple-touch-icon-precomposed" href="{% static 'nba_rank/img/favicon-152x152.png' %}" sizes="152x152">
 
-    <!-- Bootstrap -->
+    <!-- Base -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'nba_rank/css/bootstrap-theme.min.css' %}">
-    <!-- Icon fonts -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/paper/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Plugins -->
-    <link rel="stylesheet" href="{% static 'nba_rank/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
 
     <!-- Own -->
     <link rel="stylesheet" href="{% static 'nba_rank/css/style.css' %}">
+
     {% google_analytics %}
 </head>
 
@@ -46,11 +45,11 @@
     {% endblock %}
 
     {% block base_js %}
-        {# Base #}
+        <!-- Base -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <!-- Plugins -->
-        <script src="{% static 'nba_rank/js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 
         <script>
             $(document).ready(function () {
