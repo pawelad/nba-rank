@@ -32,17 +32,6 @@ footer {
 }
 
 
-/* Magnificent Popup */
-.white-popup {
-    position: relative;
-    background: #FFF;
-    padding: 20px;
-    width: auto;
-    max-width: 900px;
-    margin: 20px auto;
-}
-
-
 /* Modal vote view */
 #tie {
     margin: 100px auto;
@@ -68,4 +57,29 @@ footer {
 
 .navbar-text {
     color: #ffffff !important;
+}
+
+/* Third party plugins */
+
+/* magnific-popup */
+.white-popup {
+    position: relative;
+    background: #FFF;
+    padding: 20px;
+    width: auto;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+/* tooltipster */
+.tooltipster-shadow {
+	border-radius: 5px;
+	background: #fff;
+	box-shadow: 0 0 14px rgba(0,0,0,0.3);
+	color: #2c2c2c;
+}
+.tooltipster-shadow .tooltipster-content {
+	font-size: 14px;
+	line-height: 16px;
+	padding: 8px 10px;
 }
