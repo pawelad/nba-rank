@@ -14,6 +14,6 @@ As you *may* have noticed - I'm no frontend master,
 so any improvements to HTML/CSS and UX in general are more then welcome.
 
 ## Authors
-Developed and maintained by by [Paweł Adamczak](https://github.com/pawelad).
+Developed and maintained by [Paweł Adamczak](https://github.com/pawelad).
 
 Released under [MIT License](LICENSE).
