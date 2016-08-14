@@ -12,10 +12,12 @@ Feel free to use, ask, fork, star, report bugs, fix them, suggest enhancements
 and point out any mistakes.
 
 ## Authors
-Developed and maintained by [Paweł Adamczak](https://github.com/pawelad).
+Developed and maintained by [Paweł Adamczak][github pawelad].
 
-Released under [MIT License](LICENSE).
+Released under [MIT License][license].
 
 [trueskill]: http://research.microsoft.com/en-us/projects/trueskill/
 [nba stats]: http://stats.nba.com/
 [nba_py]: https://github.com/seemethere/nba_py
+[github pawelad]: https://github.com/pawelad
+[license]: https://github.com/pawelad/nba-rank/blob/master/LICENSE
