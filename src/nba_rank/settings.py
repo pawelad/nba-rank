@@ -36,6 +36,8 @@ INSTALLED_APPS = [
 
     # nba_rank
     'players',
+    'teams',
+    'seasons',
     'misc',
 
     # other
@@ -58,7 +60,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                'players.context_processors.seasons',
+                'seasons.context_processors.seasons',
             ],
         },
     },

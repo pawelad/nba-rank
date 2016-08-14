@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 
 from nba_py.constants import TEAMS
 
-from players.models import Team
+from teams.models import Team
 
 
 class Command(BaseCommand):
@@ -10,12 +10,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for team in TEAMS.values():
-            Team.objects.get_or_create(
+            Team.objects.update_or_create(
                 TEAM_ID=team['id'],
                 TEAM_CODE=team['code'],
-                name=team['name'],
-                city=team['city'],
-                abbr=team['abbr'],
+                defaults={
+                    'name': team['name'],
+                    'city': team['city'],
+                    'abbr': team['abbr'],
+                }
             )
 
         self.stdout.write(self.style.SUCCESS("Successfully populated teams"))

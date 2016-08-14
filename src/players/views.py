@@ -1,7 +1,6 @@
 from django.core import signing
 from django.views.generic import ListView, TemplateView, View
 from django.http import Http404
-from django.views.decorators.cache import never_cache
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.utils.translation import ugettext as _
@@ -9,7 +8,7 @@ from django.utils.translation import ugettext as _
 from trueskill import rate_1vs1
 from ranking import Ranking
 
-from players.models import PlayerSeason
+from seasons.models import Season, PlayerSeason
 from misc.utils import get_two_random
 
 
@@ -19,12 +18,8 @@ class PlayerListView(ListView):
     model = PlayerSeason
     paginate_by = 50
 
-    @never_cache
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
     def get_queryset(self):
-        season = self.kwargs['season']
+        season = get_object_or_404(Season, abbr=self.kwargs.get('season'))
         qs = super().get_queryset().filter(season=season)
         if not qs.exists():
             raise Http404
@@ -42,13 +37,9 @@ class PlayerListView(ListView):
 class PlayerVoteModalView(TemplateView):
     template_name = 'players/vote.html'
 
-    @never_cache
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs):
         # Get two random players from given season
-        season = self.kwargs['season']
+        season = get_object_or_404(Season, abbr=self.kwargs.get('season'))
         qs = PlayerSeason.objects.filter(season=season)
         player_season_a, player_season_b = get_two_random(qs)
         kwargs['player_season_a'] = player_season_a
@@ -70,9 +61,6 @@ class PlayerVoteModalView(TemplateView):
 
 
 class PlayerVoteSaveView(View):
-    @never_cache
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         try:

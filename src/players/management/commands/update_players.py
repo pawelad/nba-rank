@@ -5,7 +5,9 @@ import requests
 import kronos
 from nba_py.player import PlayerList, PlayerGeneralSplits
 
-from players.models import Player, Team, PlayerSeason
+from players.models import Player
+from teams.models import Team
+from seasons.models import Season, PlayerSeason
 
 
 @kronos.register('0 0 * * *')  # Once a day
@@ -25,8 +27,10 @@ class Command(BaseCommand):
         all_players = PlayerList().info()
 
         for api_player in all_players:
-            info_msg = "'{} ({})'".format(api_player['DISPLAY_FIRST_LAST'],
-                                          api_player['PERSON_ID'])
+            info_msg = "'{} ({})'".format(
+                api_player['DISPLAY_FIRST_LAST'],
+                api_player['PERSON_ID']
+            )
 
             # Get the player, or create him if doesn't exist
             qs = Player.objects.filter(PERSON_ID=api_player['PERSON_ID'])
@@ -38,7 +42,7 @@ class Command(BaseCommand):
                     continue
 
                 player = qs[0]
-                self.stdout.write(self.style.SUCCESS("Processing " + info_msg))
+                self.stdout.write(self.style.SUCCESS("Updating " + info_msg))
             else:
                 player = Player()
                 self.stdout.write(self.style.SUCCESS("Adding " + info_msg))
@@ -83,8 +87,12 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.ERROR("No stats for " + info_msg))
                 continue
 
+            season, __ = Season.objects.get_or_create(
+                abbr=player_stats['GROUP_VALUE'],
+            )
+
             qs = PlayerSeason.objects.filter(
-                player=player, season=player_stats['GROUP_VALUE']
+                player=player, season=season,
             )
             if qs.exists():
                 player_season = qs[0]
@@ -100,7 +108,7 @@ class Command(BaseCommand):
             player_season.team = team
 
             player_season.player = player
-            player_season.season = player_stats['GROUP_VALUE']
+            player_season.season = season
 
             player_season.ROSTERSTATUS = api_player['ROSTERSTATUS']
             player_season.GAMES_PLAYED_FLAG = api_player['GAMES_PLAYED_FLAG']

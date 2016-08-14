@@ -73,7 +73,7 @@
     <script>
         $(document).ready(function() {
             <!-- Make table striped based on ranking -->
-            $('#ranking > tbody  > tr:not(:first)').each(function() {
+            $('#ranking').find('> tbody  > tr:not(:first)').each(function() {
                 var currRanking = $(this).find("td:first").text();
                 var prev = $(this).prev();
                 var prevRanking = prev.find("td:first").text();
