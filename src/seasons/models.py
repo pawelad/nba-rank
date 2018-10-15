@@ -22,18 +22,24 @@ class Season(TimeStampedModel, models.Model):
 
 class PlayerSeason(TimeStampedModel, models.Model):
     player = models.ForeignKey(
-        'players.Player', related_name='seasons',
+        'players.Player',
+        on_delete=models.CASCADE,
+        related_name='seasons',
         verbose_name=_("player"),
     )
 
     team = models.ForeignKey(
-        'teams.Team', related_name='players_seasons',
+        'teams.Team',
+        on_delete=models.SET_NULL,
+        related_name='players_seasons',
         verbose_name=_("team"),
         null=True,
     )
 
     season = models.ForeignKey(
-        'seasons.Season', related_name='players_seasons',
+        'seasons.Season',
+        on_delete=models.CASCADE,
+        related_name='players_seasons',
         verbose_name=_("season"),
     )
 
