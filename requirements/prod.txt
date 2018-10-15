@@ -1,3 +1,13 @@
--r common.txt
-psycopg2>=2.6.2
-gunicorn>=19.6.0
+Django~=2.1
+
+django-analytical~=2.4  # TODO: Delete
+django-extensions~=2.1
+django-kronos~=1.0
+gunicorn~=19.9
+psycopg2~=2.7
+python-decouple~=3.1
+ranking~=0.3
+requests~=2.19
+trueskill~=0.4
+
+git+https://github.com/seemethere/nba_py.git

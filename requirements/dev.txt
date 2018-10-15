@@ -1,4 +1,15 @@
--r common.txt
+-r prod.txt
+
+black
+coverage
+flake8
+flake8-bugbear
+honcho
+isort
+pep8-naming
+pre-commit
 pytest
 pytest-django
-coverage
+pytest-mock
+pytest-pythonpath
+tox
