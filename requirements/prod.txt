@@ -1,6 +1,6 @@
 Django~=2.1
 
-django-analytical~=2.4  # TODO: Delete
+dj-database-url~=0.5
 django-extensions~=2.1
 django-kronos~=1.0
 gunicorn~=19.9
@@ -9,5 +9,6 @@ python-decouple~=3.1
 ranking~=0.3
 requests~=2.19
 trueskill~=0.4
+whitenoise~=4.1
 
 git+https://github.com/seemethere/nba_py.git
