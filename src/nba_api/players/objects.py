@@ -9,22 +9,6 @@ class Player(BaseNBAObject):
     """
     NBA player representation.
     """
-    _required_keys = [
-        'display_first_last',
-        'display_last_comma_first',
-        'from_year',
-        'games_played_flag',
-        'person_id',
-        'playercode',
-        'rosterstatus',
-        'team_abbreviation',
-        'team_city',
-        'team_code',
-        'team_id',
-        'team_name',
-        'to_year',
-    ]
-
     _field_mapping = {
         'from_year': int,
         'games_played_flag': str_to_bool,
@@ -47,3 +31,12 @@ class Player(BaseNBAObject):
 
     def __repr__(self):
         return f'<Player: {self.display_first_last} ({self.person_id})>'
+
+
+class PlayerStats(BaseNBAObject):
+    """
+    NBA player stats representation.
+    """
+
+    def __repr__(self):
+        return f'<PlayerStats: {self.group_set})>'

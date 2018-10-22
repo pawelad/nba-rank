@@ -112,33 +112,21 @@ class BaseNBAObject:
     """
     Base class for NBA API objects.
     """
-    _required_keys = []
     _field_mapping = {}
 
     def __init__(self, data):
         """
         Takes a (pre-parsed) API response and maps the values as class attributes.
-        It also implements a check for required keys and a method for parsing special
-        fields (i.e. dates, boolean values) into Python objects.
+        Casting fields to Python objects (i.e. boolean, dates) is supported with
+        '_field_mapping' attribute.
 
         :param data: API response
         :type data: dict
         """
-        missing_keys = [
-            k for k in self._required_keys
-            if k not in data
-        ]
-        if missing_keys:
-            raise ValueError(
-                f"Passed data doesn't have all required keys "
-                f"(missing keys: {missing_keys})"
-            )
-
         self._raw_data = data.copy()
 
         # Cast custom fields mapping
         for field_name, cast_func in self._field_mapping.items():
             data[field_name] = cast_func(data[field_name])
 
-        # Map the rest of the fields automatically
         self.__dict__.update(**data)
