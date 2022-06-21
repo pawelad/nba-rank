@@ -28,7 +28,7 @@ class PlayersAPI(BaseNBAAPI):
             'IsOnlyCurrentSeason': int(only_current),
         }
 
-        response = self._get_response(endpoint=endpoint, params=params)
+        response = self._get_response(endpoint=endpoint, params=params, referer='scores')
         parsed_response = self._parse_response(response.json())
 
         players = [Player(player_data) for player_data in parsed_response]
@@ -90,8 +90,11 @@ class PlayersAPI(BaseNBAAPI):
             "VsDivision": vs_division,
         }
 
-        response = self._get_response(endpoint=endpoint, params=params)
+        response = self._get_response(endpoint=endpoint, params=params, referer='player')
         parsed_response = self._parse_response(response.json())
+
+        if not parsed_response:
+            return None
 
         player_stats = PlayerStats(parsed_response)
 

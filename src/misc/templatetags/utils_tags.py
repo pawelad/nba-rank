@@ -11,14 +11,14 @@ def percentage(value):
         return None
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_version():
     """Return app version."""
     from nba_rank import __version__
     return __version__
 
 
-@register.assignment_tag
+@register.simple_tag
 def total_votes():
     """Return the total number of votes."""
     from django.db.models import Sum

@@ -14,6 +14,7 @@ class BaseNBAAPI:
     Base class for NBA API resources.
     """
     api_url = 'http://stats.nba.com/stats/'
+    referer = 'player'
 
     def __init__(self, session=None):
         """
@@ -42,7 +43,6 @@ class BaseNBAAPI:
             "Accept-Language": "en",
             "Host": "stats.nba.com",
             "Origin": "http://stats.nba.com",
-            "Referer": "http://stats.nba.com/",
             "User-Agent": user_agent,
             "x-nba-stats-origin": "stats",
             "x-nba-stats-token": "true",
@@ -83,7 +83,7 @@ class BaseNBAAPI:
 
         return objects
 
-    def _get_response(self, endpoint, method='get', params=None):
+    def _get_response(self, endpoint, method='get', params=None, referer=None):
         """
         Helper method to handle HTTP requests and catch API errors.
 
@@ -98,6 +98,8 @@ class BaseNBAAPI:
         """
         url = urljoin(self.api_url, endpoint)
         headers = self._get_headers()
+        headers['Referer'] = urljoin("http://stats.nba.com/", referer)
+
         response = getattr(self._session, method)(url, headers=headers, params=params)
 
         if not response.ok:
